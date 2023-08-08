@@ -2,11 +2,12 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetProductByIdQuery } from '../../api/product';
 
+
 type Props = {};
 
 const DetailProduct = (props: Props) => {
-  const { idProduct } = useParams<{ idProduct: string }>();
-  const { data: productData, isLoading } = useGetProductByIdQuery(idProduct || "");
+  const { id } = useParams<{ id: string }>();
+  const { data: productData, isLoading } = useGetProductByIdQuery(id || "");
 
   if (isLoading) {
     // Optional: You can display a loading indicator while the data is being fetched.
@@ -18,16 +19,16 @@ const DetailProduct = (props: Props) => {
     return <div>No product selected.</div>;
   }
 
-  const { name, imgUrl, brand, price, desc } = productData;
+  const { name, image, brand, price, description } = productData;
 console.log(productData);
 
   return (
     <div className="container">
-      <h3>{name}</h3>
+      <h3>{productData.name}</h3>
 
       <div className="cart row">
         <div className="col-12 col-md-6 col-lg-6 col-xl-6 text-center image-detail">
-          <img src={imgUrl} alt="" className="card-img-top" />
+          <img src={image} alt="" className="card-img-top" style={{ height: '25rem' }}/>
         </div>
         <div className="col-12 col-md-6 col-lg-6 col-xl-6 border-left">
           <div className="row">
@@ -48,7 +49,7 @@ console.log(productData);
           <div className="additional-info">
             <h4>Description</h4>
             <div className="read-more-content">
-              <p className="card-text">{desc}</p>
+              <p className="card-text">{description}</p>
             </div>
           </div>
         </div>
